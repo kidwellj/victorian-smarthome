@@ -61,6 +61,8 @@ When you're looking to purchase temp/humidity sensors, there's really no reason 
 
 TODO: add screen shot
 
+In home assistant, I'm using two additional plugins: Thermal Comfort (available on the [HACS](https://github.com/dolezsa/thermal_comfort) and Mold detection, which take in the information about temperature and humidity and make it more interesting and pointed with respond to water issues. By using monitoring like this, we've been able to pinpoint rooms where there were moisture issues (kitchen!) and add inverventions (fans) and also rule-out rooms which, contrary to the damp inspector's report didn't actually have any issues (the rest of the ground floor).
+
 ## Water Leaks
 
 Water leak sensors are in the same genre for me, and I have one of these under every sink and tap in the house. Same prices via [UK store](https://amzn.to/3C0QMgN) or China.
@@ -93,6 +95,8 @@ I've got a few sensors I'll be putting together using ESP32 microprocessors and 
 
 ## Heating
 
+### Heat Pump
+
 One of the first upgrades we made to the house was to replace the gas boiler with a heat pump. After a fair bit of research, we settled on a Nibe heat pump. Nibe makes fantastic heat pumps, but their digital connection is pretty disappointing. But the upside of being a hacker is that I can take their great pump and whip up my own monitoring solution that is superior using open source tech.
 
 Nibe sells an expensive subscription to a monthly service which takes data off the heat pump running in your home, uploads it to their cloud and then licenses the content back to you as the homeowner. Not only is the service (and this is the case with most utilities where this is an upsell dreamed up in a board room and not a genuine product) pretty painful to use, but it's overpriced, and generally for anything running in my home, which I paid for, I don't want a subscription.
@@ -101,5 +105,20 @@ The details are a bit complex, but most large appliances, since the 1970s have b
 
 You can read more where I've written it all up here: [https://community.home-assistant.io/t/how-to-connect-to-nibe-heat-pump-without-the-cloud/381099]
 
+### Radiators
+
 There's nothing wrong with radiators and hot water heating systems. I know water-based underfloor heating is the most efficient option, but in houses like ours, it's really impractical to try and put in new concrete floors. It's possible to work with limecrete as a breathable option, but radiators work fine for us. Half the rooms in this house didn't have any radiators at all, so I needed to learn a bit of plumbing (with thanks to Tony Jones at ASJ heating!) and managed to source radiators on Facebook marketplace and ebay. The key upgrade here was to go with [Tado smart radiator TRVs](https://amzn.to/3BWDiCz). There's no need for a thermostat as every single radiator is an individual heating zone. So if we turn on the woodstove, the system will progressively turn down radiators as rooms get warmer and avoid wasting energy. The system also allows us to run everything on schedules, and we can turn everything off when we're away as needed. The valves go on sale a few times a year and we picked ours up for around £35. The only down side of Tado system is that they use a proprietary wireless protocol and it's not a mesh system, so users sometimes have issues with range with the outermost radiators struggling to catch the signal of the USB controller. I got around this by using a 15m Active (powered) USB cable and moving the controller USB stick to a central position in the house. But in the future, I'd prefer to use zigbee TRVs. Trouble is, there aren't really any yet. Shelly has just announced WiFi TRVs at a good price point, but TBH, they're pretty ugly. I shall be watching this space closely...
 
+## Lights
+
+We're just getting started with lights, but it's really pretty simple. A lot of people put a huge amount of money into smart bulbs, but from my perspective it's a bit too much tech for a simple situation. So we've gone with smart relays at each light switch. I use [shelly](https://amzn.to/3PgrJcp) devices for lighting. They're designed to be hackable, are inexpensive and rock solid. For most rooms, we're using Shelly1 relays. In a few we're running the Shelly Dimmer unit. I'll post a longer explainer in a bit as, to be fair, light switches are a bit of a science. Suffice it to say for now, it's nice to be able to switch off lights automatically, but given the whole house is on LED bulbs, it isn't really a major electricity outlay.
+
+## Plants
+
+We're relying mostly on the weather station outside to monitor growing conditions and the garden. Next spring we'll be adding more food growing, so I'll add in details here regarding the smart watering and soil monitoring system we deploy in due course. Indoors, I have a germination box with an inexpensive soil warming cable in sand which is powered by a Sonoff smart-relay. The Sonoff relay has a built-in temperature sensor and allows me to track the soil temperature. We have a separate temp/humidity sensor in the room which I also average in to control the soil warming cable. This allows us to germinate seeds a month or two early using relatively little energy.
+
+## Energy Use Monitoring
+
+We're gradually adding energy monitoring to keep devices throughout the house. Every major appliance is plugged into a cheap [Gosund smart switch](https://amzn.to/3zJmHPP) which cost around £7 each and have built-in energy monitoring. Home assistant does the rest and tracks our usage on each appliance. I was already able to realise that the dishwasher was accidentally running on a high energy setting, and we were able to adjust that and save many KW from being wasted. We use Octopus Energy, for whom I have absolutely nothing but high praise. Their supply is sourced from 100% renewable energy, especially now that we've removed the gas meter from our home (the induction stove was the last step after the heat pump got installed). They also work quite actively with the DIY hacker community, providing information about energy prices and allowing users to actively monitor their usage and pricing. Shameless plug: If you aren't already using Octopus, you can get £100 (I do also!) back when you sign up using [our referral link](https://share.octopus.energy/azure-crab-741). Even though Octopus has installed a smart meter in our home, I wanted to have real-time monitoring, so we installed a [Shelly EM device](https://amzn.to/3bI44UG). I can subtract usage from most devices which are being monitored using smart plugs, and this just leaves a few things left. 
+
+As a project, I wanted to see if I could get a sense of the energy use on each individual component in our heating and hot water system, so I've just finished a new design which uses an ESP32 board, an series of inexpensive [PZEM-004 energy monitoring boards](https://amzn.to/3AbSQRB) - note, you can get these for around £3-4 via aliexpress.com. The PZEM boards communicate via another serial protocol (not modbus this time) called UART, and you can string together a number of devices on a single ESP32 board. This will allow me to monitor the flow pump, hot water immersion heater, heat pump controller, heat pump unit, etc. each individually as well as see when they're on and how hard they're working. I'll have this data integrated into the heat pump monitoring system. I'll add schematics etc. here as soon as this unit is done, hopefully later in 2022.
