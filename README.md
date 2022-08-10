@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X0EBKKN)
+
 # Victorian smart home
 
 ![photo of brick Victorian home](/images/the_fron.jpg)
