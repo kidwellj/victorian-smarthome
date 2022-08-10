@@ -36,7 +36,10 @@ https://www.linuxserver.io/blog/2017-06-24-the-perfect-media-server-2017), thoug
 
 (2) Home Assistant OS - this is the brain of our whole smart home system. I can't provide extensive detail here, but if you want to run a system like I've got here, you could strip things down considerably to just run HAOS on a smaller RaspberryPi based computer, for around £100-200
 
-(3) 
+(3) Unifi Controller - if you're already using Proxmox, [the helper scripts by @tteck are pretty great](https://github.com/tteck/Proxmox).
+
+(4) Logitech Media Server - I'm running Logitech Media Server, and here am grateful to @StevenSeifried for the [helper script](https://github.com/StevenSeifried/proxmox-scripts).
+
 
 ## (2) Network infrastructure:
 
@@ -123,3 +126,7 @@ We're relying mostly on the weather station outside to monitor growing condition
 We're gradually adding energy monitoring to keep devices throughout the house. Every major appliance is plugged into a cheap [Gosund smart switch](https://amzn.to/3zJmHPP) which cost around £7 each and have built-in energy monitoring. Home assistant does the rest and tracks our usage on each appliance. I was already able to realise that the dishwasher was accidentally running on a high energy setting, and we were able to adjust that and save many KW from being wasted. We use Octopus Energy, for whom I have absolutely nothing but high praise. Their supply is sourced from 100% renewable energy, especially now that we've removed the gas meter from our home (the induction stove was the last step after the heat pump got installed). They also work quite actively with the DIY hacker community, providing information about energy prices and allowing users to actively monitor their usage and pricing. Shameless plug: If you aren't already using Octopus, you can get £100 (I do also!) back when you sign up using [our referral link](https://share.octopus.energy/azure-crab-741). Even though Octopus has installed a smart meter in our home, I wanted to have real-time monitoring, so we installed a [Shelly EM device](https://amzn.to/3bI44UG). I can subtract usage from most devices which are being monitored using smart plugs, and this just leaves a few things left. 
 
 As a project, I wanted to see if I could get a sense of the energy use on each individual component in our heating and hot water system, so I've just finished a new design which uses an ESP32 board, an series of inexpensive [PZEM-004 energy monitoring boards](https://amzn.to/3AbSQRB) - note, you can get these for around £3-4 via aliexpress.com. The PZEM boards communicate via another serial protocol (not modbus this time) called UART, and you can string together a number of devices on a single ESP32 board. This will allow me to monitor the flow pump, hot water immersion heater, heat pump controller, heat pump unit, etc. each individually as well as see when they're on and how hard they're working. I'll have this data integrated into the heat pump monitoring system. I'll add schematics etc. here as soon as this unit is done, hopefully later in 2022.
+
+# HiFi
+
+What home is complete without multi-room streaming music? This is worth a separate guide, which I've developing here: [https://github.com/kidwellj/multi-room-hifi]
