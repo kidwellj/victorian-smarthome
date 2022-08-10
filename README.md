@@ -1,6 +1,6 @@
 # Victorian smart home
 
-![photo of brick Victorian home](Image the_fron.jpg)
+![photo of brick Victorian home](/images/the_fron.jpg)
 
 
 We're renovating an 1830s end-terraced home to bring it into the 21st century. This means in many cases that we're removing inappropriate tech which has been introduced more recently (like plasterboard / sheetrock!), and in other cases lightly augmenting our house to make sure we can lower our energy footprint, anticipte problems, and make living just a little bit more fun and comfortable. I've developed this repository in part to document my work as it goes along, but also on the possibilities that others in similar situations might benefit from some of the knowledge I've gained along the way. There are a number of issues pertaining to homes built before 1900 which can benefit from smart devices which really don't pertain to newer builds. I'll get into this a bit further below.
