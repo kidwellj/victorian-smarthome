@@ -132,3 +132,10 @@ As a project, I wanted to see if I could get a sense of the energy use on each i
 # HiFi
 
 What home is complete without multi-room streaming music? This is worth a separate guide, which I've developing here: [https://github.com/kidwellj/multi-room-hifi]
+
+# Car Charging
+
+We have an EV, and are currently charging this with an Ohme device. Ohme
+
+# Solar
+
