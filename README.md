@@ -85,6 +85,8 @@ I have three projects in the works, which will be a bit more DIY as there aren't
 
 Given the fact that most of our floors are suspended timber over bare earth, my current project in process is to deploy a series of wifi soil moisture sensors under the floors in key locations to test for unexpected water ingress which might damage floor joists. I had to remove all the joists under our front room which were above an cellar, but most joists in the house are still sound, and these are giant hand-hewn oak beams more than a century old. I'm hoping a bit of tech can ensure that I can proactively monitor for broken things that might be unnoticed at first like rainwater guttering but which could cause unexpected and unnecessary damage.
 
+I'm currently looking at using a mesh of https://github.com/rbaron/b-parasite devices for this purpose. 
+
 ### (2) airflow, fans, etc.
 
 We need to, long term, dry out the cellar a bit with some better airflow. I'd like to run a good cross-flow ventilation system, and the most sustainable options would involve air heat recovery and dehumidification. So you draw air into the room with a low-energy fan, dehumidify the incoming air (rather than the room) and extract heat before venting humid air out. You can see a commercial version of this which is sold by [VapourFlow](https://www.vapourflow.com/product-category/basement-ventilation/) with h/t to Pete Ward for recommending them. Their solutions are a bit too expensive for my taste, and they don't interface with DIY home monitoring, so a bit too proprietary for my taste. I'm planning to wire up fans and dehumidifiers in a similar kind of system, but using HA and Node Red as the brains rather than the fan so it can be replaced easily and inexpensively. Research pending, I'll share when I do some prototyping. 
@@ -139,3 +141,9 @@ We have an EV, and are currently charging this with an Ohme device. Ohme
 
 # Solar
 
+# Resources:
+
+There are a number of other far more developed builds, most not with old houses like this, but still a lot to be learned from folks! Here are a few of my favourites:
+
+- https://github.com/Burningstone91/smart-home-setup
+- https://www.dlford.io/series/how-to-home-lab/
