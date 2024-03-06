@@ -13,21 +13,16 @@ These are the key pieces of infrastructure that needed to be in place before we 
 
 ## (1) Home server
 
-This is a relatively old hardware build, using a low-voltage intel CPU. I generally run about 80% CPU and 90% of the RAM on this server, so these specifications work for me. Some day in the future, I'll switch to a newer low-voltage board and CPU with 32GB RAM and that should more or less sort me for the next decade. This server has been running more or less continuously without any hardware upgrades since 2015. 
+We've recently replaced our intel i5 based server with a much more powerful Xeon device. I first tried a rackmount server (an Intel R2312WTTR 2U for the curious), but the fans were way too noisy for a residential installation, even when tuned down considerably. I swapped over to a used Dell Poweredge tower server. For reference our previous server build is documennted below under the "Archive".
 
-### Server hardware specifications:
+The server is a DELL PowerEdge T430 Server (purchased for £350 used)
+- CPU: I'm running some of the low energy xeon CPUs in this server, which have a TDP of just 65W. This is still quite powerful but overall energy use on the server is not extraordinary - Intel Xeon E5-2650L V4 - 14-Core 1.70GHz.
+- Memory: This server has heaps of DDR slots for memory, and the relative wattage for adding memory isn't very high, so I loaded this up with 128GB memory (DDR4-2400Mhz) particularly as the hypervisor is running a number of VMs / LXCs and using ZFS for storage.
+- Storage (boot): For boot storage I'm running a 500GB SSD for the boot device
+- Storage (data): The storage array consists of 6TB x 3 SAS2 drives, which I'm running in RAIDZ1 so one of those three drives is used for parity. The upside is that one drive can die and be replaced without losing any data. It's best to connenct RAIDZ arrays directly, so I added an SAS controller card (IBM ServeRaid M1015) which set me back £30 used.
+- Finally, I've added a rather old, but still functional GPU card as I can offload some operations from the CPU and use quite a lot less energy for transcoding media or AI operations: NVIDIA Quadro P600 Graphics Card - £45 used
 
-- Motherboard: GA-Z97N-WIFI
-- CPU: Intel Core i5-4690K 3.5 GHz Quad-Core Processor
-- Memory: 16GB DDR3 (2x8gb)
-- Case: Cooler Master Elite 120 Advanced Mini ITX Tower Case
-- PSU: Corsair CSM 450 W 80+ Gold Certified Semi-modular ATX Power Supply
-- Storage: 2.5" [1TB SSD](https://amzn.to/3zPVpHP) sitting in a [3.5" adapter](https://amzn.to/3JNwWHt) and 12TB ([4tb Seagate Ironwolf Drives](https://amzn.to/3AcucAi) x 3)
-- USB Zigbee: [Phoscon ConBee II](https://amzn.to/3bHqlli)
-- USB RTL-SDL: [Nooelec NESDR SMArt v4 SDR](https://amzn.to/3bFIgZP) (RTL2832U & R820T2-Based Software Defined Radio)
-- USB Tado TRV controller
-
-(fyi: amazon affiliate links above)
+We also run a microserver as an NAS exclusively for backup. This was intended to replace our use of off-site cloud-based storage with a monthly fee. This device is a HP ProLiant MicroServer Mini Server AMD Athlon II Neo N36L Dual-Core 4GB 2TB HDD which cost less than £100.
 
 ### Software:
 
@@ -46,14 +41,15 @@ https://www.linuxserver.io/blog/2017-06-24-the-perfect-media-server-2017), thoug
 ## (2) Network infrastructure:
 
 - The house is wired with Cat6 ethernet wire running in 20mm round PVC conduits
-- [TekLager open-source router](https://teklager.se/en/products/routers/) running [PFSense](https://www.pfsense.org/) - I highly recommend TekLager and PFSense as enterprise class, hobbyist friendly firewalls
+- [TekLager open-source router](https://teklager.se/en/products/routers/) running [PFSense](https://www.pfsense.org/) - I highly recommend TekLager and PFSense as enterprise class, hobbyist friendly firewalls. Note: I'll be migrating soon to OpnSense
 - Network Downstairs: HP J9625A PoE+ (2620-24) Managed Switch - you can generally find used PoE gigabit switches by HP or Cisco on ebay for around £100
 - Network Upstairs: Ubiquiti Unifi US-8-150W Switch
 - Wifi: UAP-nanoHD hotspots (4)
 - The Zigbee USB sensor above creates a whole-home zigbee network, which is a low voltage wireless mesh network. This is terrific for sensors which can run off a small disc battery for more than a year in more cases!
 - The RTL-SDR sensor is basically a radio antenna in the server. I run [RTL433](https://github.com/merbanan/rtl_433) on the Debian server which basically detects and parses any incoming radio signal (e.g. RF). This means that we can purchase a cheap RF remote, sensors etc and the server can pick up the signal and integrate it into Home Assistant. In many cases, old tech you can get from a thrift store is given new life!
+- I've installed a BroadLink RM4 Pro IR blaster, which is connnected via wifi to Home Asssitant. This enables line-of-sight IR in the front room and house wide RF signal sending.
 
-So the house has Gigbit Ethernet, 2.4 / 5ghz Wifi, Zigbee mesh and RF networks all running (more on this below)
+So the house has Gigbit Ethernet, 2.4 / 5ghz Wifi, Zigbee mesh, RTL/SDR and RF networks all running (more on this below)
 
 # Sensors
 
@@ -141,9 +137,32 @@ We have an EV, and are currently charging this with an Ohme device. Ohme
 
 # Solar
 
+We have an array of 16 panels which connect to an inexpensive Solax inverter. The inverter has a cloud-based subscription service by which I can pay solax to return information to me about my own device. As you might imagine I'm not enthusiastic about this and instead have developed an adapter to send that data to my own server rather than their since I own the inverter. This uses an XY-017 RS485 TO TTL SP3485 Breakout board connected to an ESP32 which uses ESPHome to send Inverter data to our Home Assistant instance.
+
 # Resources:
 
 There are a number of other far more developed builds, most not with old houses like this, but still a lot to be learned from folks! Here are a few of my favourites:
 
 - https://github.com/Burningstone91/smart-home-setup
 - https://www.dlford.io/series/how-to-home-lab/
+
+
+# The Archive
+
+Previous HTPC build:
+
+This is a relatively old hardware build, using a low-voltage intel CPU. I generally run about 80% CPU and 90% of the RAM on this server, so these specifications work for me. Some day in the future, I'll switch to a newer low-voltage board and CPU with 32GB RAM and that should more or less sort me for the next decade. This server has been running more or less continuously without any hardware upgrades since 2015 (until 2022). 
+
+### Server hardware specifications:
+
+- Motherboard: GA-Z97N-WIFI
+- CPU: Intel Core i5-4690K 3.5 GHz Quad-Core Processor
+- Memory: 16GB DDR3 (2x8gb)
+- Case: Cooler Master Elite 120 Advanced Mini ITX Tower Case
+- PSU: Corsair CSM 450 W 80+ Gold Certified Semi-modular ATX Power Supply
+- Storage: 2.5" [1TB SSD](https://amzn.to/3zPVpHP) sitting in a [3.5" adapter](https://amzn.to/3JNwWHt) and 12TB ([4tb Seagate Ironwolf Drives](https://amzn.to/3AcucAi) x 3)
+- USB Zigbee: [Phoscon ConBee II](https://amzn.to/3bHqlli)
+- USB RTL-SDL: [Nooelec NESDR SMArt v4 SDR](https://amzn.to/3bFIgZP) (RTL2832U & R820T2-Based Software Defined Radio)
+- USB Tado TRV controller
+
+(fyi: amazon affiliate links above)
